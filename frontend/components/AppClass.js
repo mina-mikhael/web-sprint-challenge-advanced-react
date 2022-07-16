@@ -7,6 +7,7 @@ const initialEmail = "";
 const initialSteps = 0;
 const initialIndex = 4; // the index the "B" is at
 const initaialXY = { x: 2, y: 2 };
+const initialDirection = "";
 
 const URL = `http://localhost:9000/api/result`;
 
@@ -17,6 +18,7 @@ export default class AppClass extends React.Component {
     index: initialIndex,
     steps: initialSteps,
     xy: initaialXY,
+    direction: initialDirection,
   };
   componentDidUpdate(prevProps, prevState) {
     if (prevState.index !== this.state.index) {
@@ -51,11 +53,22 @@ export default class AppClass extends React.Component {
     }
   };
 
-  // getXYMessage = () => {
-  //   // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
-  //   // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
-  //   // returns the fully constructed string.
-  // };
+  getXYMessage = () => {
+    // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
+    // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
+    // returns the fully constructed string.
+    // if (this.state.direction === "right" && this.state.xy.x === 3) {
+    //   this.setState({ message: `You can't go right` });
+    // } else if (this.state.direction === "left" && this.state.xy.x === 1) {
+    //   this.setState({ message: `You can't go left` });
+    // } else if (this.state.direction === "up" && this.state.xy.y === 1) {
+    //   this.setState({ message: `You can't go up` });
+    // } else if (this.state.direction === "down" && this.state.xy.y === 3) {
+    //   this.setState({ message: `You can't go down` });
+    // } else {
+    //   this.setState({ message: `` });
+    // }
+  };
 
   reset = () => {
     // Use this helper to reset all states to their initial values.
@@ -73,27 +86,67 @@ export default class AppClass extends React.Component {
     // this helper should return the current index unchanged.
     if (direction === "right") {
       if (this.state.index < 2 && this.state.index >= 0) {
-        this.setState({ ...this.state, index: this.state.index + 1, steps: this.state.steps + 1 });
+        this.setState({
+          ...this.state,
+          index: this.state.index + 1,
+          steps: this.state.steps + 1,
+          message: initialMessage,
+        });
       } else if (this.state.index < 5 && this.state.index >= 3) {
-        this.setState({ ...this.state, index: this.state.index + 1, steps: this.state.steps + 1 });
+        this.setState({
+          ...this.state,
+          index: this.state.index + 1,
+          steps: this.state.steps + 1,
+          message: initialMessage,
+        });
       } else if (this.state.index < 8 && this.state.index >= 6) {
-        this.setState({ ...this.state, index: this.state.index + 1, steps: this.state.steps + 1 });
+        this.setState({
+          ...this.state,
+          index: this.state.index + 1,
+          steps: this.state.steps + 1,
+          message: initialMessage,
+        });
       }
     } else if (direction === "left") {
       if (this.state.index > 0 && this.state.index <= 2) {
-        this.setState({ ...this.state, index: this.state.index - 1, steps: this.state.steps + 1 });
+        this.setState({
+          ...this.state,
+          index: this.state.index - 1,
+          steps: this.state.steps + 1,
+          message: initialMessage,
+        });
       } else if (this.state.index > 3 && this.state.index <= 5) {
-        this.setState({ ...this.state, index: this.state.index - 1, steps: this.state.steps + 1 });
+        this.setState({
+          ...this.state,
+          index: this.state.index - 1,
+          steps: this.state.steps + 1,
+          message: initialMessage,
+        });
       } else if (this.state.index > 6 && this.state.index <= 8) {
-        this.setState({ ...this.state, index: this.state.index - 1, steps: this.state.steps + 1 });
+        this.setState({
+          ...this.state,
+          index: this.state.index - 1,
+          steps: this.state.steps + 1,
+          message: initialMessage,
+        });
       }
     } else if (direction === "down") {
       if (this.state.index >= 0 && this.state.index <= 5) {
-        this.setState({ ...this.state, index: this.state.index + 3, steps: this.state.steps + 1 });
+        this.setState({
+          ...this.state,
+          index: this.state.index + 3,
+          steps: this.state.steps + 1,
+          message: initialMessage,
+        });
       }
     } else if (direction === "up") {
       if (this.state.index <= 8 && this.state.index > 2) {
-        this.setState({ ...this.state, index: this.state.index - 3, steps: this.state.steps + 1 });
+        this.setState({
+          ...this.state,
+          index: this.state.index - 3,
+          steps: this.state.steps + 1,
+          message: initialMessage,
+        });
       }
     }
   };
@@ -103,6 +156,8 @@ export default class AppClass extends React.Component {
     // and change any states accordingly.
     this.getNextIndex(evt.target.id);
     this.setState({ message: initialMessage });
+    this.setState({ direction: evt.target.id });
+    this.getXYMessage();
   };
 
   changeHandler = (evt) => {
@@ -111,33 +166,22 @@ export default class AppClass extends React.Component {
     this.setState({ ...this.state, email: evt.target.value });
   };
 
-  // createSubmission = () => {
-  //   const newSubmission = {
-  //     'x': this.state.xy.x,
-  //     'y': this.state.xy.y,
-  //     'steps': this.state.steps,
-  //     'email': this.state.email,
-  //   };
-  //   return newSubmission;
-  // };
-
   submitHandler = (evt) => {
     // Use a POST request to send a payload to the server.
+    evt.preventDefault();
     const newSubmission = {
       x: this.state.xy.x,
       y: this.state.xy.y,
       steps: this.state.steps,
       email: this.state.email,
     };
-    evt.preventDefault();
     axios
       .post(URL, newSubmission)
       .then((res) => {
-        console.log(res);
         this.setState({ ...this.state, message: res.data.message });
       })
       .catch((err) => {
-        console.log(err);
+        this.setState({ ...this.state, message: err.response.data.message });
       });
     this.reset();
   };
