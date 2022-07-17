@@ -13,8 +13,8 @@ describe("AppFunctional is  rendered properly and working as expected", () => {
   test("renders an error message if user did not enter valid email address", async () => {
     const submitButton = screen.getByTestId("submitBtn");
     userEvent.click(submitButton);
-    const errorMsg = await screen.findByText("Ouch: email is required");
-    expect(errorMsg).toBeInTheDocument();
+    const errorMsg = await screen.findByTestId("message");
+    expect(errorMsg).toBeTruthy();
   });
 
   test("renders 4 direction buttons and one reset button to the dom", () => {
