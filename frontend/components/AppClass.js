@@ -57,17 +57,17 @@ export default class AppClass extends React.Component {
     // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
     // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
     // returns the fully constructed string.
-    // if (this.state.direction === "right" && this.state.xy.x === 3) {
-    //   this.setState({ message: `You can't go right` });
-    // } else if (this.state.direction === "left" && this.state.xy.x === 1) {
-    //   this.setState({ message: `You can't go left` });
-    // } else if (this.state.direction === "up" && this.state.xy.y === 1) {
-    //   this.setState({ message: `You can't go up` });
-    // } else if (this.state.direction === "down" && this.state.xy.y === 3) {
-    //   this.setState({ message: `You can't go down` });
-    // } else {
-    //   this.setState({ message: `` });
-    // }
+    if (this.state.direction === "right" && this.state.xy.x === 3) {
+      this.setState({ message: `You can't go right` });
+    } else if (this.state.direction === "left" && this.state.xy.x === 1) {
+      this.setState({ message: `You can't go left` });
+    } else if (this.state.direction === "up" && this.state.xy.y === 1) {
+      this.setState({ message: `You can't go up` });
+    } else if (this.state.direction === "down" && this.state.xy.y === 3) {
+      this.setState({ message: `You can't go down` });
+    } else {
+      this.setState({ message: `` });
+    }
   };
 
   reset = () => {
