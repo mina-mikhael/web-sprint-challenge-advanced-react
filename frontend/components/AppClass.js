@@ -60,6 +60,7 @@ export default class AppClass extends React.Component {
       message: initialMessage,
       index: initialIndex,
       steps: initialSteps,
+      email: initialEmail,
     });
   };
 
